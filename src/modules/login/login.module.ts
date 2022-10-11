@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Register, RegisterSchema } from 'src/Entities/register.entity';
+// import { Register, RegisterSchema } from 'src/Entities/register.entity';
+import { User, UserSchema } from 'src/Entities/user.entity';
 import { LoginController } from './login.controller';
 import { LoginService } from './login.service';
 
@@ -13,8 +14,8 @@ import { LoginService } from './login.service';
     ),
     MongooseModule.forFeature([
       {
-        name: Register.name,
-        schema: RegisterSchema,
+        name: User.name,
+        schema: UserSchema,
       },
     ]),
   ],

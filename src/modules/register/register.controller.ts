@@ -1,19 +1,20 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { BadRequestException, Body, Controller, Get, Param, Post, Req } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Register } from 'src/Entities/register.entity';
+// import { Register } from 'src/Entities/register.entity';
 import { RegisterService } from './register.service';
 import { Model } from 'mongoose';
 import { updateRegisterInfoDTO } from './dto/register.dto';
+import { User } from 'src/Entities/user.entity';
 
 
 
 @Controller('register')
 export class RegisterController {
     constructor(private readonly registerService: RegisterService,
-        @InjectModel(Register.name) private readonly registerModel: Model<Register>,
+        @InjectModel(User.name) private readonly registerModel: Model<User>,
         ) {}
 
         @Get('/getUserById/:id')
@@ -38,7 +39,7 @@ export class RegisterController {
         }
 
 
-        @Get('/checkExistByUsername/:username')
+        @Get('/checkExistByUsername/:userName')
         async checkExistByUsername(@Param('userName') userName : string) : Promise<boolean> {
             const user = await this.registerModel.findOne(
                 { userName: userName }

@@ -3,18 +3,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { BadRequestException, Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Login } from 'src/Entities/login.entity';
 import { updateLoginInfoDTO } from './dto/login.dto';
 import { LoginService } from './login.service';
 import { Model } from 'mongoose';
-import { Register } from 'src/Entities/register.entity';
+// import { Register } from 'src/Entities/register.entity';
+import { User } from 'src/Entities/user.entity';
 
 
 
 @Controller('login')
 export class LoginController {
   constructor(private readonly loginService: LoginService,
-    @InjectModel(Register.name) private readonly loginModel: Model<Register>,
+    @InjectModel(User.name) private readonly loginModel: Model<User>,
     ) {}
 
 

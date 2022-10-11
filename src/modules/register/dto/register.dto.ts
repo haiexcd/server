@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
-import { isObject, isString, IsString } from "class-validator"
+import { IsString } from "class-validator"
 import { PartialType } from "@nestjs/mapped-types";
 
 
