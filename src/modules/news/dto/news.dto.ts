@@ -71,3 +71,4 @@ export class newsDTO {
 
 
 export class updateNewsInfoDTO extends PartialType(newsDTO) {}
+export class updateCommentInfoDTO extends PartialType(commentDTO) {}
