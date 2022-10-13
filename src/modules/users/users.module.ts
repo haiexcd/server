@@ -8,7 +8,7 @@ import { User, UserSchema } from 'src/Entities/user.entity';
 @Module({
   imports: [
     MongooseModule.forRoot(
-      '',
+      'mongodb+srv://haiexcd:hai012490@cluster0.73hunog.mongodb.net/?retryWrites=true&w=majority',
       [],
     ),
     MongooseModule.forFeature([

@@ -8,6 +8,7 @@ import { RegisterService } from './register.service';
 import { Model } from 'mongoose';
 import { updateRegisterInfoDTO } from './dto/register.dto';
 import { User } from 'src/Entities/user.entity';
+import { updateUserInfoDTO } from '../users/dto/users.dto';
 
 
 
@@ -18,9 +19,9 @@ export class RegisterController {
         ) {}
 
         @Get('/getUserById/:id')
-        async getUserById(@Param('_id') _id : string) : Promise<object> {
+        async getUserById(@Param('id') id : string) : Promise<object> {
             const user = await this.registerModel.findOne(
-                { _id: _id }
+                { _id: id }
             )
             console.log(user)
             if (!user) {
@@ -50,7 +51,7 @@ export class RegisterController {
 
 
         @Post('/createNewAccount')
-        async register(@Body() body: updateRegisterInfoDTO) : Promise<object> {
+        async register(@Body() body: updateUserInfoDTO) : Promise<object> {
             const registerCheck = await this.registerModel.findOne(
                 { userName: body.userName }
             )
@@ -59,10 +60,15 @@ export class RegisterController {
                 throw new BadRequestException("User already registerd.") 
             }
             const newUser = new this.registerModel({
+                name: body.name,
                 userName: body.userName,
                 userEmail: body.userEmail,
                 password: body.password,
+
                 userRole: 'user',
+                age: body.age,
+                gender: body.gender,
+                phone: body.phone,
             })
             await newUser.save()
             return newUser

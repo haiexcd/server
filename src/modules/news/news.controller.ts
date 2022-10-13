@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { BadRequestException, Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Patch, Post, Res } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { News } from 'src/Entities/news.entity';
 import { NewsService } from './news.service';
@@ -17,9 +17,28 @@ export class NewsController {
 
 
 
+    @Get('/:page/:perpage')
+    async getNewsPerPage(@Param('page') page : number, @Param('perpage') perpage: number) : Promise<object> {
+        const toSkip = (page - 1) * perpage
+        const news = await this.newsModel.find().skip(toSkip).limit(perpage)
+
+        console.log(news)
+        return news
+    }
+
+
+
     @Get('/')
     async getAllNewsFeedStory() : Promise<object> {
         const news = await this.newsModel.find()
+        return news
+    }
+
+    @Get('/:id')
+    async getNewsFeedStory(@Param('id') id : string) : Promise<object> {
+        const news = await this.newsModel.findOne(
+            { _id: id }
+        )
         console.log(news)
         return news
     }
@@ -29,7 +48,7 @@ export class NewsController {
     async postNewsFeedStory(@Body() body: updateNewsInfoDTO) : Promise<object> {
         const news = new this.newsModel({ 
             publisherName: body.publisherName,
-            publisherTime: body.publisherTime,
+            publisherTime: Date.now(),
             comment: body.comment,
             content: body.content,
             likedIdList: body.likedIdList,
@@ -74,6 +93,23 @@ export class NewsController {
         const newsUpdated = (await this.newsModel.find(query))[0];
         const comment = newsUpdated.comment[newsUpdated.comment.length - 1];
         return comment
+    }
+
+
+    @Delete('/deletePost/:id')
+    async deletePost(@Param('id') id : string) : Promise<object> {
+        const news = await this.newsModel.find(
+            { _id: id }
+        )
+        console.log(news)
+        if (!news.length) 
+        throw new BadRequestException('Post does not exist')
+
+        await this.newsModel.deleteOne(
+            { _id: id }
+        )
+        console.log('deleted post!')
+        return news
     }
 
 
