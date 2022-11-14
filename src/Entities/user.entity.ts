@@ -27,6 +27,9 @@ export class User {
 
     @Prop()
     phone: number;
+
+    @Prop()
+    img: string;
 }
 
 

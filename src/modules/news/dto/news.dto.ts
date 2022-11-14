@@ -57,6 +57,8 @@ export class newsDTO {
    
     @IsString() readonly publisherTime: Date;
 
+    @IsString() readonly publisherImg: string;
+
 
     @IsObject() readonly content: contentDTO;
 

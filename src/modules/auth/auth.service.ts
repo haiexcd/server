@@ -11,7 +11,7 @@ export class AuthService {
     constructor(private userService: UsersService) {}
 
     async signPayload(payload: Payload) {
-        const SECRET_KEY="F95C67AC76B1957113B7B7653F68F"
+        const SECRET_KEY=""
         // return sign(payload, process.env.SECRET_KEY, { expiresIn: '7d' })
         return sign(payload, SECRET_KEY, { expiresIn: '7d' })
     }

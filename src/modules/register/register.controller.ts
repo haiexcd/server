@@ -87,6 +87,7 @@ export class RegisterController {
                 userEmail: user.userEmail,
                 userName: user.userName,
                 userRole: user.userRole,
+                _id: user._id
             };
 
             const token = await this.authService.signPayload(payload);

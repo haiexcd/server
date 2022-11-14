@@ -48,6 +48,7 @@ export class LoginController {
         userEmail: user.userEmail,
         userName: user.userName,
         userRole: user.userRole,
+        _id: user._id
       }
       const token = await this.authService.signPayload(payload)
       console.log(user)

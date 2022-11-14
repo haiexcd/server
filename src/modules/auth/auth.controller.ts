@@ -7,7 +7,7 @@ import { registerDTO } from '../register/dto/register.dto';
 import { UsersService } from '../users/users.service';
 import { AuthService } from './auth.service';
 import { loginDTO } from '../login/dto/login.dto';
-import { get } from 'http';
+
 
 @Controller('auth')
 export class AuthController {
@@ -28,24 +28,30 @@ export class AuthController {
       return "this can be seen by anyone";
     }
 
-    // @Post('register')
-    // async register(@Body() registerDTO: registerDTO) {
-    //   const user = await this.userService.create(registerDTO);
-    //   const payload = {
-    //     userEmail: user.userEmail,
-    //   };
+    @Post('register')
+    async register(@Body() registerDTO: registerDTO) {
+      const user = await this.userService.create(registerDTO);
+      const payload = {
+        userEmail: user.userEmail,
+        userName: user.userName,
+        userRole: user.userRole,
+        _id: user._id
+      };
 
-    //   const token = await this.authService.signPayload(payload);
-    //   return { user, token };
-    // }
+      const token = await this.authService.signPayload(payload);
+      return { user, token };
+    }
 
-    // @Post('login')
-    // async login(@Body() loginDTO: loginDTO) {
-    //   const user = await this.userService.findByLogin(loginDTO);
-    //   const payload = {
-    //     userEmail: user.userEmail,
-    //   };
-    //   const token = await this.authService.signPayload(payload);
-    //   return { user, token };
-    // }
+    @Post('login')
+    async login(@Body() loginDTO: loginDTO) {
+      const user = await this.userService.findByLogin(loginDTO);
+      const payload = {
+        userEmail: user.userEmail,
+        userName: user.userName,
+        userRole: user.userRole,
+        _id: user._id
+      };
+      const token = await this.authService.signPayload(payload);
+      return { user, token };
+    }
 }

@@ -49,6 +49,7 @@ export class NewsController {
         const news = new this.newsModel({ 
             publisherName: body.publisherName,
             publisherTime: Date.now(),
+            publisherImg: body.publisherImg,
             comment: body.comment,
             content: body.content,
             likedIdList: body.likedIdList,
@@ -117,11 +118,12 @@ export class NewsController {
     async deleteComment(@Param('postId') postId : string, @Param('commentId') commentId : string) : Promise<object> {
         try {
             const result = await this.newsModel.updateOne(
-                { postId: postId },
+                { _id: postId },
                 {
-                    $pull: { comment: { commentId: commentId } },
+                    $pull: { comment: { _id: commentId } },
                 }
             );
+            console.log(`Successfully deleted a comment.`);
             return result
         } catch (err) {
             console.log(err);

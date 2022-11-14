@@ -30,6 +30,8 @@ export class userDTO {
     
     @IsNumber() readonly phone: number;
 
+    @IsString() readonly img: string;
+
 
 }
 

@@ -53,6 +53,9 @@ export class News {
     publisherTime: Date;
 
     @Prop()
+    publisherImg: string;
+
+    @Prop()
     content: Content;
 
     @Prop([Comment])
